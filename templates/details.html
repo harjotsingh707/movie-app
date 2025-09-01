@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+{% if content %}
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{{ content.Poster|get_poster_url }}" class="img-fluid rounded shadow-sm" alt="{{ content.Title }}">
+    </div>
+    <div class="col-md-8">
+      <h2 class="mb-1">{{ content.Title }} <small class="text-muted">({{ content.Year }})</small></h2>
+      <p class="mb-2"><strong>Genre:</strong> {{ content.Genre }}</p>
+      <p><strong>Director:</strong> {{ content.Director }}</p>
+      <p><strong>Actors:</strong> {{ content.Actors }}</p>
+      <p><strong>IMDb Rating:</strong> {{ content.imdbRating|format_omdb_rating }}</p>
+      <hr>
+      <h5>Plot</h5>
+      <p>{{ content.Plot }}</p>
+      <hr>
+      <p class="mb-0"><strong>Runtime:</strong> {{ content.Runtime }} · <strong>Language:</strong> {{ content.Language }}</p>
+    </div>
+  </div>
+{% else %}
+  <div class="alert alert-danger">Content not found.</div>
+{% endif %}
+{% endblock %}
