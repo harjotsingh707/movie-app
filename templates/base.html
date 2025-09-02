@@ -9,21 +9,22 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="bg-dark text-light">
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark shadow">
   <div class="container">
-    <!-- Left side: App name -->
+    <!-- Left side: brand -->
     <a class="navbar-brand fw-bold" href="/">
       <i class="fa-solid fa-film"></i> MovieApp
     </a>
-
-    <!-- Right side: Theme toggle button -->
+    <!-- Right side: theme toggle -->
     <div class="ms-auto">
       <i id="themeToggle" class="fa-solid fa-circle-half-stroke theme-toggle"></i>
     </div>
   </div>
 </nav>
 
-
+<!-- Main content -->
 <div class="container my-5">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -35,8 +36,9 @@
   {% block content %}{% endblock %}
 </div>
 
+<!-- Footer -->
 <footer class="text-center text-muted py-4">
-  © {{ config.get('APP_NAME', 'MovieApp') }} · Built with Flask · Data from OMDb
+  © MovieApp · Built with Flask · Data from OMDb
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
