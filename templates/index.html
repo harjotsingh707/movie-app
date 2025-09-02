@@ -1,28 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row mb-4 align-items-center">
-  <div class="col-md-8">
-    <h1 class="display-6 mb-0">Discover movies & TV shows</h1>
-    <p class="lead text-muted">Search titles, view ratings, plots and more — powered by OMDb.</p>
-  </div>
-  <div class="col-md-4 text-md-end">
-    <div class="btn-group" role="group" aria-label="content type">
-      <form method="POST" class="d-inline">
-        <input type="hidden" name="query" value="{{ query }}">
-        <input type="hidden" name="content_type" value="all">
-        <button class="btn btn-outline-light {% if content_type=='all' %}active{% endif %}" type="submit">All</button>
-      </form>
-      <form method="POST" class="d-inline">
-        <input type="hidden" name="query" value="{{ query }}">
-        <input type="hidden" name="content_type" value="movie">
-        <button class="btn btn-outline-light {% if content_type=='movie' %}active{% endif %}" type="submit">Movies</button>
-      </form>
-      <form method="POST" class="d-inline">
-        <input type="hidden" name="query" value="{{ query }}">
-        <input type="hidden" name="content_type" value="series">
-        <button class="btn btn-outline-light {% if content_type=='series' %}active{% endif %}" type="submit">Series</button>
-      </form>
-    </div>
+
+<!-- Search Bar -->
+<div class="row mb-4">
+  <div class="col-12">
+    <form method="POST" class="input-group mb-4">
+      <input type="text" class="form-control" name="query" placeholder="Search movies or series..." value="{{ query }}">
+      <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Search</button>
+    </form>
   </div>
 </div>
 
@@ -30,22 +15,19 @@
   <div class="alert alert-warning">{{ error_message }}</div>
 {% endif %}
 
+<!-- Trending Section -->
+{% if not query %}
+  <h2 class="mb-4 text-light">🔥 Trending Now</h2>
+{% endif %}
+
 <div class="row g-4">
   {% for item in content_results %}
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="card h-100 position-relative">
-        <!-- Rating badge -->
-        {% if item.imdbRating %}
-        <div class="rating-badge">
-          ⭐ {{ item.imdbRating }}/10
-        </div>
-        {% endif %}
-        <!-- Poster -->
         <img src="{{ item.Poster|get_poster_url }}" class="card-img-top poster" alt="{{ item.Title }}">
-        <!-- Info -->
         <div class="card-body">
           <h5 class="card-title mb-1">{{ item.Title }}</h5>
-          <p class="text-muted small mb-2">{{ item.Year }} · {{ item.content_type|capitalize }}</p>
+          <p class="text-muted small mb-2">{{ item.Year }} · {{ item.Type|capitalize }}</p>
           <a href="{{ url_for('content_details', imdb_id=item.imdbID) }}" class="btn btn-sm btn-primary w-100">View details</a>
         </div>
       </div>
@@ -56,4 +38,5 @@
     </div>
   {% endfor %}
 </div>
+
 {% endblock %}
