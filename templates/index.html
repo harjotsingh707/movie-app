@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Search Bar -->
-<div class="row mb-4">
-  <div class="col-12">
-    <form method="POST" class="input-group mb-4">
-      <input type="text" class="form-control" name="query" placeholder="Search movies or series..." value="{{ query }}">
-      <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Search</button>
-    </form>
+<!-- Genre Filters -->
+<div class="mb-4 text-center">
+  <div class="btn-group">
+    <a href="{{ url_for('index', genre='action') }}" class="btn btn-outline-light">Action</a>
+    <a href="{{ url_for('index', genre='romance') }}" class="btn btn-outline-light">Romance</a>
+    <a href="{{ url_for('index', genre='horror') }}" class="btn btn-outline-light">Horror</a>
+    <a href="{{ url_for('index', genre='comedy') }}" class="btn btn-outline-light">Comedy</a>
+    <a href="{{ url_for('index', genre='sci-fi') }}" class="btn btn-outline-light">Sci-Fi</a>
   </div>
 </div>
+
+<!-- Search Bar -->
+<form method="POST" action="/" class="input-group mb-4">
+  <input type="text" class="form-control" name="query" placeholder="Search movies or series..." value="{{ query }}">
+  <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Search</button>
+</form>
 
 {% if error_message %}
   <div class="alert alert-warning">{{ error_message }}</div>
 {% endif %}
 
-<!-- Trending Section -->
-{% if not query %}
-  <h2 class="mb-4 text-light">🔥 Trending Now</h2>
-{% endif %}
-
+<!-- Movies Grid -->
 <div class="row g-4">
   {% for item in content_results %}
     <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="card h-100 position-relative">
+      <div class="card movie-card h-100">
         <img src="{{ item.Poster|get_poster_url }}" class="card-img-top poster" alt="{{ item.Title }}">
         <div class="card-body">
           <h5 class="card-title mb-1">{{ item.Title }}</h5>
@@ -34,9 +37,16 @@
     </div>
   {% else %}
     <div class="col-12 text-center text-muted">
-      <p class="lead">Try searching for a movie or series above (e.g. "Inception", "Naruto").</p>
+      <p class="lead">No results. Try searching above.</p>
     </div>
   {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center my-4">
+  {% if query %}
+    <a href="{{ url_for('index', query=query, page=page+1) }}" class="btn btn-outline-light">Next Page →</a>
+  {% endif %}
 </div>
 
 {% endblock %}

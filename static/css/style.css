@@ -1,70 +1,25 @@
-:root {
-  --bg-dark: #0d1117;
-  --bg-light: #f8f9fa;
-  --card-dark: rgba(255,255,255,0.05);
-  --card-light: #ffffff;
-  --accent: linear-gradient(90deg, #6a5cff, #7ef0c7);
-}
-
-/* General */
 body {
-  font-family: "Poppins", sans-serif;
-  background: var(--bg-dark);
+  background-color: #121212;
   color: #fff;
-  transition: background 0.3s, color 0.3s;
-}
-
-/* Light mode */
-body.light-mode {
-  background: var(--bg-light);
-  color: #000;
 }
 
 .navbar {
-  background: var(--accent);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-footer {
-  opacity: 0.8;
+  background-color: #1f1f1f;
 }
 
 /* Movie Cards */
-.card {
-  border: none;
-  border-radius: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.movie-card {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.movie-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.4);
-}
-
-.card .poster {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  height: 360px;
+/* Poster Image */
+.poster {
+  height: 400px;
   object-fit: cover;
-}
-
-/* Rating badge */
-.rating-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #ffc107;
-  color: #000;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-}
-
-/* Dark/light switch button */
-.theme-toggle {
-  cursor: pointer;
-  font-size: 1.2rem;
-  margin-left: 12px;
 }
