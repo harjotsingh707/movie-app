@@ -33,7 +33,7 @@ def index():
     error_message = ""
 
     if genre:
-        # Show movies by genre (fake, since OMDb doesn’t allow genre search directly → we simulate with keywords)
+        # Simulated genre filter (OMDb doesn’t support direct genre queries → use keyword as search)
         query = genre
 
     if query:
@@ -43,11 +43,13 @@ def index():
         else:
             error_message = data.get("Error", "No results found.")
     else:
-        # Default trending movies
-        trending_titles = ["Oppenheimer", "Barbie", "Dune", "The Dark Knight",
-                           "Stranger Things", "Avengers", "Titanic", "Naruto",
-                           "Interstellar", "Frozen", "Joker", "John Wick",
-                           "The Matrix", "Iron Man", "Shrek", "Spider-Man"]
+        # Default: show trending movies
+        trending_titles = [
+            "Oppenheimer", "Barbie", "Dune", "The Dark Knight",
+            "Stranger Things", "Avengers", "Titanic", "Naruto",
+            "Interstellar", "Frozen", "Joker", "John Wick",
+            "The Matrix", "Iron Man", "Shrek", "Spider-Man"
+        ]
         for title in trending_titles:
             movie = fetch_movie(title)
             if movie and movie.get("Response") == "True":
@@ -66,3 +68,8 @@ def content_details(imdb_id):
     r = requests.get(url)
     data = r.json() if r.status_code == 200 else {}
     return render_template("details.html", content=data)
+
+# ✅ Render fix: bind to 0.0.0.0 and use Render’s PORT
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
